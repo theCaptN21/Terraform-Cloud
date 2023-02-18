@@ -14,7 +14,7 @@ resource "aws_lb_target_group" "tfcloud_tg" {
   name     = "tfcloud-lb-tg-${substr(uuid(), 0, 5)}"
   protocol = var.tg_protocol
   port     = var.tg_port
-  vpc_id   = var.vpc_id
+  vpc_id   = "vpc-0d8e79429e4200282"
 
   lifecycle {
     create_before_destroy = true
