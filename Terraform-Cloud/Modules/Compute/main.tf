@@ -1,11 +1,6 @@
 data "aws_rds_engine_version" "test" {
   engine             = "mysql"
   preferred_versions = ["8.0.27"]
-
-  filter {
-    name   = "name"
-    values = ["ami-xxxxxxxx"]
-  }
 }
 
 data "aws_ami" "linux" {
