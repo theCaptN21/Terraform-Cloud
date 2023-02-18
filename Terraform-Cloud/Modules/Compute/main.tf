@@ -28,7 +28,7 @@ data "aws_ami" "linux" {
 
 resource "aws_launch_template" "tfcloud_rds" {
   name_prefix            = "tfcloud_rds"
-  image_id               = data.aws_rds_engine_version.test.id
+  image_id               = data.aws_ami.linux.id
   instance_type          = var.database_instance_type
   vpc_security_group_ids = [var.private_sg]
   key_name               = var.key_name
@@ -37,7 +37,6 @@ resource "aws_launch_template" "tfcloud_rds" {
   tags = {
     Name = "tfcloud_rds_database"
   }
-
 }
 
 resource "aws_autoscaling_group" "tfcloud_rds" {
