@@ -2,6 +2,8 @@ provider "aws" {
   region = var.region
 }
 
+data "aws_availability_zones" "available" {}
+
 #VPC
 
 resource "aws_vpc" "tfcloud_vpc" {
@@ -41,7 +43,7 @@ resource "aws_subnet" "tfcloud_public_subnet" {
   vpc_id                  = aws_vpc.tfcloud_vpc.id
   cidr_block              = var.public_cidrs[count.index]
   map_public_ip_on_launch = true
-  availability_zone       = ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d"][count.index]
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
 
   tags = {
     Name = "tfcloud_public_${count.index + 1}"
@@ -52,7 +54,7 @@ resource "aws_subnet" "tfcloud_private_subnet" {
   count             = length(var.private_cidrs)
   vpc_id            = aws_vpc.tfcloud_vpc.id
   cidr_block        = var.private_cidrs[count.index]
-  availability_zone = ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d"][count.index]
+  availability_zone = data.aws_availability_zones.available.names[count.index][count.index]
 
   tags = {
     Name = "tfcloud_private_${count.index + 1}"
