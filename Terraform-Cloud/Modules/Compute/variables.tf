@@ -13,5 +13,5 @@ variable "bastion_instance_type" {
 
 variable "database_instance_type" {
   type    = string
-  default = "t2.micro"
+  default = "db.t2.micro"
 }
