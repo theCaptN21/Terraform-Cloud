@@ -14,8 +14,15 @@ resource "aws_lb_target_group" "tfcloud_tg" {
   name     = "tfcloud-lb-tg-${substr(uuid(), 0, 5)}"
   protocol = var.tg_protocol
   port     = var.tg_port
-  vpc_id   = "vpc-0d8e79429e4200282"
+  vpc_id   = "var.vpc_id"
 
+  health_check {
+    healthy_threshold   = var.lb_healthy_threshold
+    unhealthy_threshold = var.lb_unhealthy_threshold
+    timeout             = var.lb_timeout
+    interval            = var.lb_interval
+  }
+  
   lifecycle {
     create_before_destroy = true
     ignore_changes        =[name]
