@@ -14,11 +14,17 @@ module "Compute" {
 
 #Load Balancer Module
 module "LoadBalancer" {
-  source        = "./Modules/LoadBalancer"
-  vpc_id        = module.Networking.vpc_id
-  web_sg        = module.Networking.web_sg
-  public_subnet = module.Networking.public_subnet
-  database_asg  = module.Compute.database_asg
+  source                 = "./Modules/LoadBalancer"
+  vpc_id                 = module.Networking.vpc_id
+  web_sg                 = module.Networking.web_sg
+  public_subnet          = module.Networking.public_subnet
+  database_asg           = module.Compute.database_asg
+  tg_port                = 80
+  tg_protocol            = "HTTP"
+  lb_healthy_threshold   = 2
+  lb_unhealthy_threshold = 2
+  lb_timeout             = 3
+  lb_interval            = 30
 }
 
 #VPC Module
